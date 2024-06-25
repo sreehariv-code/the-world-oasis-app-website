@@ -1,12 +1,16 @@
-import CabinCard from "@/app/_components/CabinCard";
+import { Suspense } from "react";
+
+import CabinList from "@/app/_components/CabinList";
+import Spinner from "@/app/_components/Spinner";
 
 export const metadata = {
   title: "Cabins",
 };
 
-export default function Page() {
+export default async function Page() {
   // CHANGE
-  const cabins = [];
+  // const cabins = [];
+  // const cabins = await getCabins();
 
   return (
     <div>
@@ -22,13 +26,12 @@ export default function Page() {
         Welcome to paradise.
       </p>
 
-      {/* {cabins.length > 0 && (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
-          {cabins.map((cabin) => (
-            <CabinCard cabin={cabin} key={cabin.id} />
-          ))}
-        </div>
-      )} */}
+      {/* More Granular Approach for Streaming data */}
+      {/* Suspense should be outside of asynchronous function. So, the asynchronous code should be moved to a seperate component  */}
+      {/* Better approach to have an imporved UX */}
+      <Suspense fallback={<Spinner />}>
+        <CabinList />
+      </Suspense>
     </div>
   );
 }
