@@ -7,7 +7,7 @@ export const metadata = {
   title: "Cabins",
 };
 
-export default async function Page() {
+export default function Page() {
   // CHANGE
   // const cabins = [];
   // const cabins = await getCabins();
