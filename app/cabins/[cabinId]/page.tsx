@@ -31,13 +31,9 @@ export async function generateMetadata({ params }: { params: Params }) {
 // Make dynamic pages static using generateStaticParams
 export async function generateStaticParams() {
   const cabins = await getCabins();
-  let ids = cabins.map((cabin) => ({
-    params: { cabinId: String(cabin.id) },
-  }));
-  console.log(ids);
-  return cabins.map((cabin) => ({
-    params: { cabinId: String(cabin.id) },
-  }));
+  const ids = cabins.map((cabin) => ({ cabinId: String(cabin.id) }));
+
+  return ids;
 }
 
 interface PageProps {
