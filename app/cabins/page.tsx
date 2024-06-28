@@ -2,17 +2,27 @@ import { Suspense } from "react";
 
 import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
+import Filter from "../_components/Filter";
 
+interface SearchParamsProps {
+  searchParams: {
+    capacity?: "all" | "small" | "medium" | "large";
+  };
+}
+
+//only workd for statically generated pages
 export const revalidate = 3600; // Once per hour
 
 export const metadata = {
   title: "Cabins",
 };
 
-export default function Page() {
+export default function Page({ searchParams }: SearchParamsProps) {
   // CHANGE
   // const cabins = [];
   // const cabins = await getCabins();
+
+  const filter = searchParams?.capacity ?? "all";
 
   return (
     <div>
@@ -28,11 +38,16 @@ export default function Page() {
         Welcome to paradise.
       </p>
 
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
       {/* More Granular Approach for Streaming data */}
       {/* Suspense should be outside of asynchronous function. So, the asynchronous code should be moved to a seperate component  */}
       {/* Better approach to have an imporved UX */}
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <Suspense fallback={<Spinner />} key={filter}>
+        {/* Filter cabins based on searchParams */}
+        {/* CabinList is a server component */}
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );
