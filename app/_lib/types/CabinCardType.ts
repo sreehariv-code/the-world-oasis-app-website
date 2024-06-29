@@ -5,4 +5,5 @@ export interface CabinCardProps {
   regularPrice: number;
   discount: number;
   image: string;
+  description?: string;
 }

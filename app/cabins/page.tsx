@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
 import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 interface SearchParamsProps {
   searchParams: {
@@ -48,6 +49,7 @@ export default function Page({ searchParams }: SearchParamsProps) {
         {/* Filter cabins based on searchParams */}
         {/* CabinList is a server component */}
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );

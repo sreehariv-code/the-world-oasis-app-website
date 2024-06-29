@@ -109,6 +109,8 @@ export async function getBookedDatesByCabinId(cabinId: string) {
     .eq("cabinId", cabinId)
     .or(`startDate.gte.${todayISOString},status.eq.checked-in`);
 
+  // await new Promise((res) => setTimeout(res, 5000));
+
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
@@ -154,7 +156,12 @@ export async function getCountries() {
 /////////////
 // CREATE
 
-export async function createGuest(newGuest: any) {
+interface NewGuest {
+  email: string;
+  fullName: string | undefined | null;
+}
+
+export async function createGuest(newGuest: NewGuest) {
   const { data, error } = await supabase.from("guests").insert([newGuest]);
 
   if (error) {
