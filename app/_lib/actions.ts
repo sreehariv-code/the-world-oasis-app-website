@@ -21,6 +21,6 @@ export async function signOutAction() {
   });
 }
 
-export async function updateGuest(formData: FormData) {
+export async function updateGuest(formData: FormData): Promise<void> {
   console.log(formData);
 }

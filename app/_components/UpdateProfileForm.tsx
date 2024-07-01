@@ -24,6 +24,7 @@ export default function UpdateProfileForm({ children, guest }: FormProps) {
       <div className="space-y-2">
         <label>Full name</label>
         <input
+          placeholder="Name"
           defaultValue={fullName}
           disabled
           name="fullName"
@@ -34,6 +35,7 @@ export default function UpdateProfileForm({ children, guest }: FormProps) {
       <div className="space-y-2">
         <label>Email address</label>
         <input
+          placeholder="Email"
           name="email"
           defaultValue={email}
           disabled
@@ -57,6 +59,7 @@ export default function UpdateProfileForm({ children, guest }: FormProps) {
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
+          placeholder="National ID number"
           defaultValue={nationalId || ""}
           name="nationalID"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
