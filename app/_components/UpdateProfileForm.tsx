@@ -12,13 +12,11 @@ interface FormProps {
 export default function UpdateProfileForm({ children, guest }: FormProps) {
   const [count, setCount] = useState(0);
 
-  const { countryFlag, fullName, email, nationalId, nationality } = guest || {};
-
-  // const countryFlag = "pt.jpg";
+  const { countryFlag, fullName, email, nationalID, nationality } = guest || {};
 
   return (
     <form
-      action={updateGuest}
+      action={(formData: FormData) => updateGuest(formData)}
       className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
     >
       <div className="space-y-2">
@@ -60,7 +58,7 @@ export default function UpdateProfileForm({ children, guest }: FormProps) {
         <label htmlFor="nationalID">National ID number</label>
         <input
           placeholder="National ID number"
-          defaultValue={nationalId || ""}
+          defaultValue={nationalID || ""}
           name="nationalID"
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
         />

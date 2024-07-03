@@ -3,7 +3,7 @@ export interface Guest {
   created_at: string;
   fullName: string;
   email: string;
-  nationalId: string | number | null;
+  nationalID: string | number | null;
   nationality: string | null;
   countryFlag: string | null;
 }
