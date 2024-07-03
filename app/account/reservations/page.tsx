@@ -1,12 +1,30 @@
 import ReservationCard from "@/app/_components/ReservationCard";
+import { auth } from "@/app/_lib/auth";
+import { getBookings } from "@/app/_lib/data-service";
+import { Session, User } from "next-auth";
 
 export const metadata = {
   title: "Reservations",
 };
 
-export default function Page() {
-  // CHANGE
-  const bookings: any = [];
+// Extend the User type from next-auth
+interface GuestUser extends User {
+  guestId?: string | number | null;
+}
+
+// Extend the Session type from next-auth
+interface GuestSession extends Session {
+  user?: GuestUser;
+}
+
+export default async function Page() {
+  const session: GuestSession | null = await auth();
+
+  const guestId = session?.user?.guestId
+    ? String(session.user.guestId)
+    : undefined;
+
+  const bookings = await getBookings(guestId);
 
   return (
     <div>

@@ -2,6 +2,7 @@
 import { Session, User } from "next-auth";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
+import { revalidatePath } from "next/cache";
 
 // Extend the User type from next-auth
 interface GuestUser extends User {
@@ -64,4 +65,7 @@ export async function updateGuest(formData: FormData) {
   if (error) {
     throw new Error("Guest could not be updated");
   }
+
+  //This method is used for on demand data revalidation
+  revalidatePath("/account/profile");
 }
