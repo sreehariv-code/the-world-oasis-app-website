@@ -3,6 +3,7 @@ import { Session, User } from "next-auth";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
+import { getBookings } from "./data-service";
 
 // Extend the User type from next-auth
 interface GuestUser extends User {
@@ -14,18 +15,21 @@ interface GuestSession extends Session {
   user?: GuestUser;
 }
 
+//User to Sign in
 export async function signInAction() {
   await signIn("google", {
     redirectTo: "/account",
   });
 }
 
+//User to sign out
 export async function signOutAction() {
   await signOut({
     redirectTo: "/",
   });
 }
 
+//To Update Guest information
 export async function updateGuest(formData: FormData) {
   const session = await auth();
   if (!session) throw new Error("You must be logged In");
@@ -68,4 +72,31 @@ export async function updateGuest(formData: FormData) {
 
   //This method is used for on demand data revalidation
   revalidatePath("/account/profile");
+}
+
+//Delete a reservation for a guest
+export async function deleteReservation(
+  bookingId: string | number | null | undefined
+): Promise<void> {
+  const session = (await auth()) as GuestSession;
+  if (!session) throw new Error("You must be logged In");
+
+  const guestBookings = await getBookings(session.user?.guestId);
+
+  const guestBookingsIds = guestBookings.map((booking) => booking.id);
+
+  if (!guestBookingsIds.includes(bookingId))
+    throw new Error("You're not allowed to delete this booking ");
+
+  const { error } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", bookingId);
+
+  if (error) {
+    throw new Error("Booking could not be deleted");
+  }
+
+  //This method is used for on demand data revalidation
+  revalidatePath("/account/reservations");
 }
