@@ -4,6 +4,7 @@ import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { getBookings } from "./data-service";
+import { redirect } from "next/navigation";
 
 // Extend the User type from next-auth
 interface GuestUser extends User {
@@ -27,6 +28,50 @@ export async function signOutAction() {
   await signOut({
     redirectTo: "/",
   });
+}
+
+//Update Booking Data for loggedin users
+export async function updateBooking(formData: FormData) {
+  const bookingId = formData.get("bookingId");
+
+  // 1) Authentication
+  const session = (await auth()) as GuestSession;
+  if (!session) throw new Error("You must be logged In");
+
+  // 2) Authorization
+  const guestBookings = await getBookings(session.user?.guestId);
+
+  const guestBookingsIds = guestBookings.map((booking) => booking.id);
+
+  if (!guestBookingsIds.includes(Number(bookingId)))
+    throw new Error("You're not allowed to update this booking ");
+
+  // 3) Building update data
+  const updateData = {
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations")?.slice(0, 1000),
+  };
+
+  // 4) Mutation
+  const { error } = await supabase
+    .from("bookings")
+    .update(updateData)
+    .eq("id", bookingId)
+    .select()
+    .single();
+
+  // 5) Error handling
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be updated");
+  }
+
+  // 6) Revalidating the cached page
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
+  revalidatePath("/account/reservations");
+
+  // 7) Redirecting to accounts
+  redirect("/account/reservations");
 }
 
 //To Update Guest information

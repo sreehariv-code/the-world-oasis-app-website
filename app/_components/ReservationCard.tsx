@@ -3,30 +3,7 @@ import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import DeleteReservation from "./DeleteReservation";
 import Image from "next/image";
 import Link from "next/link";
-
-enum BookingStatus {
-  Unconfirmed = "unconfirmed",
-  CheckIn = "check-in",
-  CheckOut = "check-out",
-}
-
-interface Cabin {
-  name: string;
-  image: string;
-}
-
-interface BookingProp {
-  id: string | number;
-  guestId?: number;
-  startDate: string;
-  endDate: string;
-  numNights: number;
-  status: BookingStatus;
-  created_at: Date;
-  cabins: Cabin;
-  totalPrice: number;
-  numGuests: number;
-}
+import { BookingProp } from "../_lib/types/BookingTypes";
 
 export const formatDistanceFromNow = (dateStr: string) =>
   formatDistance(parseISO(dateStr), new Date(), {

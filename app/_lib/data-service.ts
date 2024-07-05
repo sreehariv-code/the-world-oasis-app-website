@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 /////////////
 // GET
 
-export async function getCabin(id?: string) {
+export async function getCabin(id?: number) {
   const { data, error } = await supabase
     .from("cabins")
     .select("*")

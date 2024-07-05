@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Guest } from "../_lib/types/Profile";
 import { updateGuest } from "../_lib/actions";
-import { useFormStatus } from "react-dom";
-import SpinnerMini from "./SpinnerMini";
+import { Guest } from "../_lib/types/Profile";
+import SubmitButton from "./SubmitButton";
 
 interface FormProps {
   children?: React.ReactNode;
@@ -69,23 +68,8 @@ export default function UpdateProfileForm({ children, guest }: FormProps) {
       <div className="flex justify-end items-center gap-6">
         {/* useFormStatus can only be used in a component that is rendered inside a form */}
         {/* Only client components have access to useFormStatus hook. So the parent element should be using 'use client' directive. To use it in a form in server component, we have to create the Button as a different export component with 'use client' directive */}
-        <Button />
+        <SubmitButton pendingLabel="Updating....">Update profile</SubmitButton>
       </div>
     </form>
-  );
-}
-
-//Usage of useFormStatus
-//useFormStatus is a react-dom hook, not a react hook
-//It is now in experimental state
-function Button() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
-      disabled={pending}
-    >
-      {pending ? "Updating" : "Update profile"}
-    </button>
   );
 }
