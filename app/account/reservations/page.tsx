@@ -1,4 +1,5 @@
 import ReservationCard from "@/app/_components/ReservationCard";
+import ReservationList from "@/app/_components/ReservationList";
 import { auth } from "@/app/_lib/auth";
 import { getBookings } from "@/app/_lib/data-service";
 import { Session, User } from "next-auth";
@@ -17,6 +18,22 @@ interface GuestSession extends Session {
   user?: GuestUser;
 }
 
+interface BookingProp {
+  id: number;
+  created_at: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  numGuests: number;
+  totalPrice: number;
+  guestId: number;
+  cabinId: number;
+  cabins: {
+    name: string;
+    image: string;
+  }[];
+}
+
 export default async function Page() {
   const session: GuestSession | null = await auth();
 
@@ -24,7 +41,9 @@ export default async function Page() {
     ? String(session.user.guestId)
     : undefined;
 
-  const bookings = await getBookings(guestId);
+  const bookings: BookingProp[] = await getBookings(guestId);
+
+  console.log(bookings);
 
   return (
     <div>
@@ -40,11 +59,7 @@ export default async function Page() {
           </a>
         </p>
       ) : (
-        <ul className="space-y-6">
-          {bookings.map((booking: any) => (
-            <ReservationCard booking={booking} key={booking.id} />
-          ))}
-        </ul>
+        <ReservationList bookings={bookings} />
       )}
     </div>
   );

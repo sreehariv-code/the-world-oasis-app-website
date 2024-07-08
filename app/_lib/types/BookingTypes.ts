@@ -15,7 +15,7 @@ export interface BookingProp {
   startDate: string;
   endDate: string;
   numNights: number;
-  status: BookingStatus;
+  status?: BookingStatus;
   created_at: Date;
   cabins: Cabin;
   totalPrice: number;
