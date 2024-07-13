@@ -5,6 +5,7 @@ import { CabinCardProps } from "../_lib/types/CabinCardType";
 import { useReservation } from "./ReservationContext";
 import { createBooking } from "../_lib/actions";
 import SubmitButton from "./SubmitButton";
+import Image from "next/image";
 
 interface ReservationProps {
   cabin: CabinCardProps;
@@ -39,13 +40,16 @@ function ReservationForm({ cabin, user }: ReservationProps) {
         <p>Logged in as</p>
 
         <div className="flex gap-4 items-center">
-          <img
-            // Important to display google profile images
-            referrerPolicy="no-referrer"
-            className="h-8 rounded-full"
-            src={user?.image || "/user.png"}
-            alt={user?.name || "Guest"}
-          />
+          <div className="relative h-8 rounded-full aspect-square overflow-hidden">
+            <Image
+              // Important to display google profile images
+              referrerPolicy="no-referrer"
+              className="object-cover"
+              src={user?.image || "/user.png"}
+              alt={user?.name || "Guest"}
+              fill
+            />
+          </div>
           <p>{user.name}</p>
         </div>
       </div>

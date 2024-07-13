@@ -31,12 +31,15 @@ export default async function Navigation() {
               href="/account"
               className="hover:text-accent-400 transition-colors flex items-center gap-4"
             >
-              <img
-                className="h-8 rounded-full"
-                src={session.user.image}
-                alt={session.user.name ?? "Guest"}
-                referrerPolicy="no-referrer"
-              />
+              <div className="aspect-square h-8 rounded-full relative overflow-hidden">
+                <Image
+                  fill
+                  className="object-cover "
+                  src={session.user.image}
+                  alt={session.user.name ?? "Guest"}
+                  referrerPolicy="no-referrer"
+                />
+              </div>
               <span> Guest area</span>
             </Link>
           ) : (

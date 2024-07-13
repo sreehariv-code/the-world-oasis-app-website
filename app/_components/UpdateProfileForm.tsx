@@ -4,6 +4,7 @@ import { useState } from "react";
 import { updateGuest } from "../_lib/actions";
 import { Guest } from "../_lib/types/Profile";
 import SubmitButton from "./SubmitButton";
+import Image from "next/image";
 
 interface FormProps {
   children?: React.ReactNode;
@@ -45,11 +46,14 @@ export default function UpdateProfileForm({ children, guest }: FormProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label htmlFor="nationality">Where are you from?</label>
-          <img
-            src={countryFlag || ""}
-            alt="Country flag"
-            className="h-5 rounded-sm"
-          />
+          <div className="rounded-sm w-7 h-5 relative ">
+            <Image
+              src={countryFlag || ""}
+              alt="Country flag"
+              className="object-fill"
+              fill
+            />
+          </div>
         </div>
 
         {children}
