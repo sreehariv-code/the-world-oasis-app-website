@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 
 interface GETProps {
   params: {
-    cabinId: string;
+    cabinId: string | number;
   };
 }
 
