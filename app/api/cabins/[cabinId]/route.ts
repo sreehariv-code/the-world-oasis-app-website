@@ -1,5 +1,4 @@
 import { getBookedDatesByCabinId, getCabin } from "@/app/_lib/data-service";
-import { NextRequest } from "next/server";
 
 interface GETProps {
   params: {
@@ -8,10 +7,7 @@ interface GETProps {
 }
 
 //The function names should follow the HTTP verb name conventions (GET,POST,PUT)
-export async function GET(
-  request: NextRequest,
-  { params }: GETProps
-): Promise<Response> {
+export async function GET({ params }: GETProps): Promise<Response> {
   const { cabinId } = params;
 
   try {
