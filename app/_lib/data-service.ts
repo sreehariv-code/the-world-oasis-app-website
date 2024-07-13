@@ -174,21 +174,21 @@ export async function createGuest(newGuest: NewGuest) {
   return data;
 }
 
-export async function createBooking(newBooking: any) {
-  const { data, error } = await supabase
-    .from("bookings")
-    .insert([newBooking])
-    // So that the newly created object gets returned!
-    .select()
-    .single();
+// export async function createBooking(newBooking: any) {
+//   const { data, error } = await supabase
+//     .from("bookings")
+//     .insert([newBooking])
+//     // So that the newly created object gets returned!
+//     .select()
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be created");
-  }
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Booking could not be created");
+//   }
 
-  return data;
-}
+//   return data;
+// }
 
 /////////////
 // UPDATE
@@ -209,20 +209,20 @@ export async function createBooking(newBooking: any) {
 //   return data;
 // }
 
-export async function updateBooking(id: string, updatedFields: any) {
-  const { data, error } = await supabase
-    .from("bookings")
-    .update(updatedFields)
-    .eq("id", id)
-    .select()
-    .single();
+// export async function updateBooking(id: string, updatedFields: any) {
+//   const { data, error } = await supabase
+//     .from("bookings")
+//     .update(updatedFields)
+//     .eq("id", id)
+//     .select()
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be updated");
-  }
-  return data;
-}
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Booking could not be updated");
+//   }
+//   return data;
+// }
 
 /////////////
 // DELETE
