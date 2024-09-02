@@ -21,7 +21,7 @@ Welcome to the beautiful paradise for the spending your time with the loved ones
 11. [Installation](#installation)
 12. [Usage](#usage)
 13. [Contributing](#contributing)
-14. [License](#license)
+
 
 ## Built with
 
