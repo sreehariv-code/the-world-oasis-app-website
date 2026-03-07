@@ -8,7 +8,7 @@ interface CabinListProps {
 }
 
 export default async function CabinList({ filter }: CabinListProps) {
-  //   noStore();
+  noStore();
   const cabins = await getCabins();
 
   if (!cabins.length) return null;
@@ -23,7 +23,7 @@ export default async function CabinList({ filter }: CabinListProps) {
       (cabin) => cabin.maxCapacity >= 4 && cabin.maxCapacity <= 7
     );
   if (filter === "large")
-    displayCabins = cabins.filter((cabin) => cabin.maxCapacity >= 3);
+    displayCabins = cabins.filter((cabin) => cabin.maxCapacity >= 8);
 
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
